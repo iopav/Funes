@@ -20,7 +20,7 @@ import android.widget.ImageView;
  * Created by dongzhong on 2018/5/30.
  */
 
-public class FloatingImageDisplayService extends Service {
+public class OpenBigWindowService extends Service {
     public static boolean isStarted = false;
 
     private WindowManager windowManager;

@@ -61,8 +61,8 @@ public class FloatingButtonService extends Service {
     private void showFloatingWindow() {
         if (Settings.canDrawOverlays(this)) {
             button = new Button(getApplicationContext());
-            button.setText("Floating Window");
-            button.setBackgroundColor(Color.BLUE);
+            button.setText("F");
+            button.setBackgroundColor(Color.WHITE);
             windowManager.addView(button, layoutParams);
 
             button.setOnTouchListener(new FloatingOnTouchListener());
@@ -73,16 +73,21 @@ public class FloatingButtonService extends Service {
         private int x;
         private int y;
 
+        private int nowX;
+
+        private int nowY;
+
         @Override
         public boolean onTouch(View view, MotionEvent event) {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     x = (int) event.getRawX();
                     y = (int) event.getRawY();
+
                     break;
                 case MotionEvent.ACTION_MOVE:
-                    int nowX = (int) event.getRawX();
-                    int nowY = (int) event.getRawY();
+                    nowX = (int) event.getRawX();
+                    nowY = (int) event.getRawY();
                     int movedX = nowX - x;
                     int movedY = nowY - y;
                     x = nowX;
@@ -91,10 +96,23 @@ public class FloatingButtonService extends Service {
                     layoutParams.y = layoutParams.y + movedY;
                     windowManager.updateViewLayout(view, layoutParams);
                     break;
+                case MotionEvent.ACTION_UP:
+                    if(x==nowX && y==nowY){
+                        openBigWindow();
+                    }
+                    break;
                 default:
                     break;
             }
             return false;
         }
+
+        /**
+         * 打开大悬浮窗，同时关闭小悬浮窗。
+         */
+        private void openBigWindow() {
+
+        }
+
     }
 }
